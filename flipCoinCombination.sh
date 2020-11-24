@@ -46,5 +46,21 @@ function getPercentage(){
     echo $percentage
 }
 
+function sortDictionary(){
+
+for i in ${!Triplet[@]}
+do 
+    echo $i wins in Triplet is ${Triplet[$i]} and percentage is `getPercentage $i`
+    if [ ${Triplet[$i]} -gt $MaxCount ]
+    then
+        MaxCount=${Triplet[$i]}
+        MaxComb=$i
+    fi
+done
+
+}
+
+sortDictionary
 echo Keys in Triplet is ${!Triplet[@]}
 echo Values in Triplet is ${Triplet[@]}
+echo winning combination is $MaxComb and percentage is `getPercentage $MaxComb`
