@@ -2,60 +2,49 @@
 
 HEADS=1
 TAILS=0
-TT=0;TH=1;HT=2;HH=3
+TTT=0;TTH=1;THT=2;HTT=3;THH=4;HTH=5;HHT=6;HHH=7
 
 declare -A Singlet
-declare -A Doublet
+declare -A Triplet
 count=0
 percentage=0
 MaxCount=0
 
 while [ $count -lt 50 ]
 do 
-    toss=$((RANDOM%4))
-    if [ $toss -eq $TT ]
+    toss=$((RANDOM%8))
+    if [ $toss -eq $TTT ]
     then
-        ((Doublet["TT"]++))
-        echo TT is winner
-    elif [ $toss -eq $TH ]
+        ((Triplet["TTT"]++))
+    elif [ $toss -eq $TTH ]
     then    
-        ((Doublet["TH"]++))
-        echo TH is winner
-    elif [ $toss -eq $HT ]
+        ((Triplet["TTH"]++))
+    elif [ $toss -eq $THT ]
     then    
-        ((Doublet["HT"]++))
-        echo HT is winner
-    elif [ $toss -eq $HH ]
+        ((Triplet["THT"]++))
+    elif [ $toss -eq $HTT ]
     then    
-        ((Doublet["HH"]++))
-        echo HH is winner    
+        ((Triplet["HTT"]++))  
+    elif [ $toss -eq $THH ]
+    then    
+        ((Triplet["THH"]++))
+    elif [ $toss -eq $HTH ]
+    then    
+        ((Triplet["HTH"]++))
+    elif [ $toss -eq $HHT ]
+    then    
+        ((Triplet["HHT"]++))
+    elif [ $toss -eq $HHH ]
+    then    
+        ((Triplet["HHH"]++))        
     fi
     ((count++))           
 done  
 
 function getPercentage(){
-    percentage=$(( ${Doublet[$1]}*100/$count ))
+    percentage=$(( ${Triplet[$1]}*100/$count ))
     echo $percentage
 }
 
-function sortDictionary(){
-
-for i in ${!Doublet[@]}
-do 
-    if [ ${Doublet[$i]} -gt $MaxCount ]
-    then
-        MaxCount=${Doublet[$i]}
-        MaxComb=$i
-    fi
-done
-
-}
-
-sortDictionary
-echo Keys in Doublet is ${!Doublet[@]}
-echo Values in Doublet is ${Doublet[@]}
-echo TT wins in Doublet is ${Doublet["TT"]} and percentage is `getPercentage TT`
-echo TH wins in Doublet is ${Doublet["TH"]} and percentage is `getPercentage TH`
-echo HT wins in Doublet is ${Doublet["HT"]} and percentage is `getPercentage HT`
-echo HH wins in Doublet is ${Doublet["HH"]} and percentage is `getPercentage HH`
-echo winning combination is $MaxComb and percentage is `getPercentage $MaxComb`
+echo Keys in Triplet is ${!Triplet[@]}
+echo Values in Triplet is ${Triplet[@]}
